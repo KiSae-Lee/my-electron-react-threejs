@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tiny React</title>
+</head>
+
+<body>
+    <div id="root1"></div>
+    <div id="root2"></div>
+</body>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">
+</script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js">
+</script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel"> // to use babel in the script, must make a type definition.
+    // Concept of React.
+
+    const domNode1 = document.getElementById("root1"); // get root in the body.
+    const domNode2 = document.getElementById("root2");
+
+    const root = ReactDOM.createRoot(domNode1); // create root.
+    const jsxRoot = ReactDOM.createRoot(domNode2);
+
+    const span = React.createElement(
+        "span", {
+        key: "mySpan",
+        style: { color: 'red' },
+        onMouseEnter: () => console.log("mouse enter!")
+    }, "Hello, React!"
+    ); // create span.
+
+    const btn = React.createElement("button", {
+        key: "myBtn",
+        style: { backgroundColor: "tomato" },
+        onClick: () => console.log("Clicked!")
+    }, "Click me");
+
+    const div = React.createElement("div", {}, [span, btn]); // A container for span and btn.
+
+    function JsxTitle () { // must use PascalCase. NOT camelCase.
+        return (
+            <h3
+        id="jsxSpan"
+        key="jsxSpan"
+        onMouseEnter={() => console.log("JSX span entered!")}>
+        JSX Span</h3>
+        );
+    };
+
+    const jsxDiv = (
+        <div>
+            <JsxTitle />
+        </div>
+    );
+
+    root.render(div); // add span into the root.
+    jsxRoot.render(jsxDiv);
+</script>
+
+</html>
