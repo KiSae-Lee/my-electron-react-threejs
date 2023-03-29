@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tiny React</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">
+</script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js">
+</script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel"> // to use babel in the script, must make a type definition.
+    // Concept of React.
+
+    const domNode = document.getElementById("root"); // get root in the body.
+    const root = ReactDOM.createRoot(domNode);
+
+    let counter = 0;
+
+    function countUp() {
+        counter = counter + 1;
+        root.render(<App />);
+    }
+
+    function App() {
+        const [counter, modifier] = React.useState(0);
+        console.log(counter);
+
+        return (
+            <div>
+                <h3>Total clicks: {counter}</h3>
+                <button onClick={countUp}> Click me</button>
+            </div>
+        );
+    }
+
+    root.render(<App />);
+
+</script>
+
+</html>
