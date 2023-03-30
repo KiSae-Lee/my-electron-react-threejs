@@ -25,7 +25,11 @@
         const [counter, setCounter] = React.useState(0); // set state. Reference: https://react.dev/reference/react/useState
 
         const onClick = () => {
-            setCounter(counter + 1); // only re-render the modified part.
+            // Bad code.
+            // setCounter(counter + 1);
+            
+            // Good code.
+            setCounter((current) => counter + 1); // only re-render the modified part.
         }
 
         return (

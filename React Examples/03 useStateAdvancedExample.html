@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tiny React</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">
+</script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js">
+</script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel"> // to use babel in the script, must make a type definition.
+    // Concept of React.
+
+    const domNode = document.getElementById("root"); // get root in the body.
+    const root = ReactDOM.createRoot(domNode);
+
+    function MinToHour() {
+
+        const [amount, SetAmount] = React.useState(0); // Give default value 0.
+        const [flipped, setFlipped] = React.useState(false);
+
+        const onChange = (event) => {
+            console.log("minutes value has been changed!");
+            console.log(event.target.value); // returns changed value.
+            SetAmount(current => event.target.value);
+        }
+
+        const onFlip = () => {
+            reset();
+            setFlipped(current => !current);
+        }
+
+        const reset = () => {
+            SetAmount(0);
+        }
+
+        return (
+            <div>
+
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input
+                        value={flipped ? amount * 60 : amount}
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange} // listening for every changes.
+                        disabled={flipped}
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input
+                        value={flipped ? amount : amount / 60}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        onChange={onChange}
+                        disabled={!flipped}
+                    />
+                </div>
+
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>{flipped ? "Turn back" : "Invert"}</button>
+
+            </div>
+        );
+    }
+
+    function KmToMiles() {
+        return (
+            <div>
+                <h3>Kilometers to Miles</h3>
+            </div>
+        );
+    }
+    function App() {
+        const [index, setIndex] = React.useState("none");
+        const onSelect = (event) => {
+            setIndex(current => event.target.value)
+        }
+
+        return (
+            <div>
+                <h1>Unit Converter</h1>
+                <select value={index} onChange={onSelect}>
+                    <option value="none">Select your units</option>
+                    <option value="0">Minutes & Hours</option>
+                    <option value="1">Kilometers and Miles</option>
+                </select>
+
+                <hr />
+                {index === "0" ? <MinToHour /> : null}
+                {index === "1" ? <KmToMiles /> : null}
+
+            </div>
+        );
+    }
+
+    root.render(<App />);
+
+</script>
+
+</html>
