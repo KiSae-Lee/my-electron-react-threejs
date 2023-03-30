@@ -20,8 +20,8 @@
     const domNode = document.getElementById("root"); // get root in the body.
     const root = ReactDOM.createRoot(domNode);
 
-    function MyButton({text = "hello", onClick}) { // default value for the property. But it not going to work when type is "required" in prop-types..
-        console.log(`Inputs for MyButton: props.text = ${text}`)
+    function MyButton(props) { // default value for the property. But it not going to work when type is "required" in prop-types..
+        console.log(`Inputs for MyButton: props.text = ${props.text}`)
         return (
             <button
                 style={
@@ -32,8 +32,8 @@
                         border: 0,
                         borderRadius: 10,
                     }}
-                onClick={onClick}
-            >{text}</button> // Update text with props input.
+                onClick={props.onClick}
+            >{props.text}</button> // Update text with props input.
         );
     }
 
