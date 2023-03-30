@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tiny React</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!--JSX-->
+<script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script> <!--Property type checker.-->
+
+<script type="text/babel"> // to use babel in the script, must make a type definition.
+    // Concept of React.
+
+    const domNode = document.getElementById("root"); // get root in the body.
+    const root = ReactDOM.createRoot(domNode);
+
+    function MyButton({text = "hello", onClick}) { // default value for the property. But it not going to work when type is "required" in prop-types..
+        console.log(`Inputs for MyButton: props.text = ${text}`)
+        return (
+            <button
+                style={
+                    {
+                        backgroundColor: "tomato",
+                        color: "white",
+                        padding: "10px 20px",
+                        border: 0,
+                        borderRadius: 10,
+                    }}
+                onClick={onClick}
+            >{text}</button> // Update text with props input.
+        );
+    }
+
+    // prop-types library.
+    MyButton.propTypes = { // Define types for properties.
+        text: PropTypes.string,
+        onClick: PropTypes.func,
+    }
+
+    // memo function.
+    const MemorizedMyButton = React.memo(MyButton); // Re-render only the button which props have been changed.
+
+    function App() {
+
+        const [value, setValue] = React.useState("Save Changes");
+        
+        const changeValue = () =>{
+            setValue("Revert CHange");
+        }
+        return (
+            <div>
+                <div>
+                    <h1>Property Example</h1>
+                </div>
+                <div>
+                    <MemorizedMyButton text={value} onClick={changeValue} />
+                    <MemorizedMyButton text="confirm" />
+                </div>
+            </div>
+        );
+    }
+
+    root.render(<App />);
+
+</script>
+
+</html>
