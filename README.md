@@ -1,1 +1,10 @@
-# my-electron-react-threejs
+# My Electron, React and ThreeJS
+
+## React Examples
+
+### How to
+1. Put one of the example HTML file into the main directory and change name to "index.html". Use "Live Server" vscode plugin to check the result.
+
+### Contents
+1. 01 - createElement and JSX example.
+2. 02 - useState example.
