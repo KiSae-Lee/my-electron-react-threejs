@@ -3,7 +3,8 @@ import React from "react";
 
 // import from files.
 import { Button } from "./Elements/Button";
-import { ToDoList } from "./ToDoList/ToDoList";
+import { ToDoList } from "./Components/ToDoList";
+import { CoinTracker } from "./Components/CoinTracker";
 
 // import styles.
 import styles from "./App.module.css";
@@ -16,9 +17,8 @@ function App() {
         <h1 className={styles.title}>My Electron, React and ThreeJS!</h1>
         <Button text="myButton"></Button>
       </div>
-      <div>
         <ToDoList />
-      </div>
+        <CoinTracker />
     </div>
   );
 }
