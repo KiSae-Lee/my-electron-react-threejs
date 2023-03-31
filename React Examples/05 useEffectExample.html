@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tiny React</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!--JSX-->
+<script src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script> <!--Property type checker.-->
+
+<script type="text/babel"> // to use babel in the script, must make a type definition.
+    // Concept of React.
+
+    const domNode = document.getElementById("root"); // get root in the body.
+    const root = ReactDOM.createRoot(domNode);
+
+    function Hello() {
+        React.useEffect(() => {
+            console.log("'Hello' created!");
+            return () => console.log("'Hello' destroyed!"); // Cleanup function.
+        }, [])
+        return <h1>Hello!</h1>;
+    }
+
+    function App() {
+
+        const [counter, setValue] = React.useState(0);
+        const [keyword, setKeyword] = React.useState("");
+
+        const onClick = () => {
+            setValue((current) => current + 1);
+            console.log("I run when button clicked!") // runs every time.
+        }
+
+        const onChange = (event) => {
+            console.log(" run when Input changed!");
+            setKeyword((current) => current = event.target.value);
+        }
+
+        // useEffect(A function that you want to call, A variable which triggers calling the function when it changes)
+        React.useEffect(() => { // only execute at the first time.
+            console.log("I run only once.")
+        }, []);
+
+        React.useEffect(() => { // only execute at the first time and when 'keyword' variable changes.
+            if (keyword !== "" && keyword.length > 5) {
+                console.log("I run when 'keyword' changes:", keyword);
+            }
+        }, [keyword])
+
+        React.useEffect(() => {
+            console.log("I run when 'counter changes:", counter)
+        }, [counter])
+
+        const [showing, setShowing] = React.useState(false);
+        const onShowButtonClicked = () => {
+            setShowing((current) => !current);
+        }
+
+        return (
+            <div>
+                <h1>Property Example - Counter: {counter}</h1>
+                <input value={keyword} type="text" placeholder="Search here..." onChange={onChange} />
+                <button onClick={onClick}>Click Me</button>
+                <div>
+                    {showing ? <Hello /> : null}
+                    <button onClick={onShowButtonClicked}>{showing ? "Hide" : "Show"}</button>
+                </div>
+            </div>
+        );
+    }
+
+    root.render(<App />);
+
+</script>
+
+</html>
