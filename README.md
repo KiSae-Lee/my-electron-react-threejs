@@ -10,3 +10,7 @@
 2. 02 - useState example.
 3. 03 - useState Advanced example.
 4. 04 - Memo and Prop-Types function example.
+
+### Package information
+1. @types/*: Packages that make typescript compatible.
+2. react-router-dom: help react to change pages.
