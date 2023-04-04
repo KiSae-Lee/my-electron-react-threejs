@@ -3,7 +3,7 @@ import { app, BrowserWindow } from 'electron';
 import * as isDev from 'electron-is-dev';
 import { createURLRoute } from "electron-router-dom";
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3000/#/';
 
 let mainWindow: BrowserWindow | null;
 

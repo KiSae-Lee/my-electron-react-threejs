@@ -10,6 +10,10 @@
 
 # production
 /build
+/dist
+
+# typescript compiled files.
+public/electron.js
 
 # misc
 .DS_Store

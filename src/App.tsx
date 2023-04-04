@@ -1,7 +1,7 @@
 // import from packages.
 import React from "react";
 // Switch => Routes
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 // import from files.
 import Home from "./routes/Home";
 import { ToDoList } from "./Example Components/ToDoList";

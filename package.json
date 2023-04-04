@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "./",
   "main": "./public/electron.js",
+  "author": "Kisae Lee",
+  "description": "Electron, React and ThreeJS template.",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -12,12 +14,12 @@
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
-    "electron": "^24.0.0",
-    "electron-builder": "^23.6.0",
+    "@types/react-router": "^5.1.20",
     "electron-is-dev": "^2.0.0",
     "electron-router-dom": "^1.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -29,8 +31,8 @@
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "dev": "tsc ./public/electron.ts && concurrently \"npm run react-start\" \"wait-on http://127.0.0.1:3000 && electron .\"",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "pack": "tsc ./public/electron.ts && npm run react-build && electron-builder --dir",
+    "dist": "tsc ./public/electron.ts && npm run react-build && electron-builder build",
     "postinstall": "electron-builder install-app-deps"
   },
   "eslintConfig": {
@@ -52,9 +54,10 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router": "^5.1.20",
+    "@types/electron": "^1.6.10",
     "concurrently": "^8.0.1",
-    "react-router-dom": "^6.10.0",
+    "electron": "^24.0.0",
+    "electron-builder": "^23.6.0",
     "wait-on": "^7.0.1"
   }
 }
