@@ -14,3 +14,9 @@
 ### Package information
 1. @types/*: Packages that make typescript compatible.
 2. react-router-dom: help react to change pages.
+
+
+### Reference
+1. Resizeable Panel
+   - https://www.youtube.com/watch?v=aMjou4yXWdU
+   - https://www.youtube.com/watch?v=P6rNIDnejsg

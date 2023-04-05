@@ -1,34 +1,77 @@
-// import from packages.
 import React from "react";
-// Switch => Routes
-import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
-// import from files.
-import Home from "./routes/Home";
-import { ToDoList } from "./Example Components/ToDoList";
-import { CoinTracker } from "./Example Components/CoinTracker";
-import { MovieViewer, MovieDetail } from "./Example Components/MovieViewer";
-// import styles.
-import styles from "./App.module.css";
 
-function App() {
-  console.log("Create App!");
+import SidebarButton from "./Components/Element/SidebarButton";
+
+import styles from "./App..module.css";
+
+export default function App() {
+  const sidebarRef = React.useRef<HTMLDivElement>(null);
+  const [isResizing, setIsResizing] = React.useState(false);
+  const [sidebarWidth, setSidebarWidth] = React.useState(268);
+
+  const startResizing = React.useCallback((event: React.MouseEvent) => {
+    console.log(event.type);
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = React.useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const resizing = React.useCallback(
+    (event: MouseEvent) => {
+      console.log("Resizing!");
+      if (isResizing && sidebarRef.current !== null) {
+        setSidebarWidth(
+          event.clientX - sidebarRef.current.getBoundingClientRect().left
+        );
+      }
+    },
+    [isResizing]
+  );
+
+  React.useEffect(() => {
+    window.addEventListener("mousemove", resizing);
+    window.addEventListener("mouseup", stopResizing);
+
+    return () => {
+      window.removeEventListener("mousemove", resizing);
+      window.removeEventListener("mouseup", stopResizing);
+    };
+  }, [resizing, stopResizing]);
+
+  const [isShowing, setIsShowing] = React.useState<string>("none");
+  const SidebarButtonClicked = () => {
+    if (isShowing === "none") setIsShowing("flex");
+    else setIsShowing("none");
+  };
 
   return (
-    <div className="App">
-      <Router>
-      <h1 className={styles.title}>My Electron, React and ThreeJS!</h1>
-      <h3><Link to="/">Back to Home</Link></h3>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/to-do-list" element={<ToDoList />} />
-          <Route path="/coin-tracker" element={<CoinTracker />} />
-          <Route path="/movie-viewer" element={<MovieViewer />} />
-        {<Route path="/movie-viewer/:id" element={<MovieDetail />} />}
-        </Routes>
-      </Router>
+    <div className={styles.appContainer}>
+      <div className={styles.iconSidebar}>
+        <SidebarButton onClick={SidebarButtonClicked}></SidebarButton>
+        <SidebarButton></SidebarButton>
+        <SidebarButton></SidebarButton>
+        <SidebarButton></SidebarButton>
+        <SidebarButton></SidebarButton>
+      </div>
+      <div
+        ref={sidebarRef}
+        className={styles.appSidebar}
+        style={{
+          width: sidebarWidth,
+          display: isShowing,
+        }}
+        onMouseDown={(event) => event.preventDefault()}
+      >
+        <div className={styles.appSidebarContent}><h3>Menu Here</h3></div>
+        <div
+          className={styles.appSidebarResizer}
+          onMouseDown={startResizing}
+        ></div>
+      </div>
+
+      <div className={styles.appFrame}><h1>3D Viewport Here</h1></div>
     </div>
   );
-  
 }
-
-export default App;

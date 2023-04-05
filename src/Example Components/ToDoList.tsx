@@ -1,9 +1,10 @@
 import React from "react";
-import { Button } from "../Elements/Button";
 
 export function ToDoList() {
   // TODO: Fix the re-render issue.
-  console.log("Create ToDoList!");
+  React.useEffect(() => {
+    console.log("Create ToDoList!");
+  }, []);
 
   const [toDo, setToDo] = React.useState("");
   const [toDos, setToDos] = React.useState<string[]>([]);
@@ -26,7 +27,7 @@ export function ToDoList() {
 
   return (
     <div>
-        <h2>My To Do List - Total Count: {toDos.length}</h2>
+      <h2>My To Do List - Total Count: {toDos.length}</h2>
       <form onSubmit={onSubmit}>
         <input
           value={toDo}
@@ -36,7 +37,7 @@ export function ToDoList() {
           type="text"
           placeholder="Write your To Do..."
         />
-        <Button text="Add To Do" />
+        <button>Add To Do</button>
       </form>
       <hr />
       {toDos.map((item, index) => (
