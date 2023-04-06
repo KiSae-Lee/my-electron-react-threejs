@@ -2,13 +2,14 @@ import React from "react";
 
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei"
+import { OrbitControls } from "@react-three/drei";
 
 import SidebarButton from "./Components/Element/SidebarButton";
 
 import styles from "./App..module.css";
 
 function Box(props: JSX.IntrinsicElements["mesh"]) {
+
   const ref = React.useRef<THREE.Mesh>(null);
   const [isHovering, setIsHovering] = React.useState(false);
   const [isClicked, setIsClicked] = React.useState(false);
@@ -122,7 +123,7 @@ export default function App() {
 
       <div className={styles.appFrame} style={{ width: appFrameWidth }}>
         <Canvas camera={{ position: [1, 2, 3] }}>
-        <OrbitControls  />
+          <OrbitControls />
           <gridHelper args={[10, 20]} />
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
@@ -130,7 +131,6 @@ export default function App() {
           <axesHelper args={[5]} />
 
           <Box position={[0, 0, 0]} />
-
         </Canvas>
       </div>
     </div>
