@@ -6,9 +6,7 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'build'),
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].bundle.js',
-    publicPath: '/',
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -17,6 +15,9 @@ module.exports = {
         exclude: /nodeModules/,
         use: {
           loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          },
         },
       },
       {
