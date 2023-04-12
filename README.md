@@ -24,14 +24,14 @@
 #### Common
 1. `@types/*`: Packages that make typescript compatible.
 
-#### React
+#### React - User Interface Library
 1. `react`: react module.
 2. `react-dom`: provides DOM-specific methods that can be used at the top level of your app and as an escape hatch to get outside the React model if you need to.
 
-#### Typescript
+#### Typescript - Language
 1. `typescript`: typescript module.
 
-#### Webpack
+#### Webpack - Bundler
 1. `webpack`: module bundler.
 2. `webpack-cli`: webpack CLI provides a flexible set of commands for developers to increase speed when setting up a custom webpack project.
 3. `webpack-dev-server`: Use webpack with a development server that provides live reloading. This should be used for development only.
@@ -43,10 +43,15 @@
 9. `html-loader`: Exports HTML as string. HTML is minimized when the compiler demands.
 10. `html-webpack-plugin`: Plugin that simplifies creation of HTML files to serve your bundles
 
-#### Babel - a free and open-source JavaScript transcompiler
+#### Babel - A free and open-source JavaScript transcompiler
 1. `@babel/core`: Babel compiler core.
 2. `@babel/preset-env`: A Babel preset for each environment.
 3. `@babel/preset-react`: Babel preset for all React plugins.
 4. `@babel/preset-typescript`: Babel preset for TypeScript.
 
+#### sqlite - FE DB.
+1. `sql.js`: Javascript SQL database. It allows you to create a relational database and query it entirely in the browser.
+
 ### Reference
+1. `sql.js`: https://cpro95.tistory.com/500
+2. `Draw ERD`: https://dbdiagram.io/
