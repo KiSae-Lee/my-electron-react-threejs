@@ -2,7 +2,7 @@ import * as path from "path";
 import * as ELECTRON from "electron";
 import * as RemoteMain from "@electron/remote/main";
 import * as isDev from "electron-is-dev";
-import * as Log from "electron-log"
+import * as log from "electron-log"
 
 import * as DB from "../database/dbMethod.js"// Get data function form database.
 
@@ -12,8 +12,8 @@ let mainWindow: ELECTRON.BrowserWindow | null;
 RemoteMain.initialize();
 
 function createMainWindow(): void {
-  Log.info("Creating Main window...");
-  Log.info(isDev ? "Open in Development mode!" : "Open in Build mode!");
+  log.info("Creating Main window...");
+  log.info(isDev ? "Open in Development mode!" : "Open in Build mode!");
 
   mainWindow = new ELECTRON.BrowserWindow({
     width: 1920,
@@ -31,12 +31,12 @@ function createMainWindow(): void {
 
   mainWindow.once("ready-to-show", () => {
     mainWindow?.show();
-    Log.info("Show Main window!");
+    log.info("Show Main window!");
   });
 
   if (isDev) {
-    Log.info("Electron is in development mode!");
-    Log.info(`Trying to connect ${BASE_URL}`);
+    log.info("Electron is in development mode!");
+    log.info(`Trying to connect ${BASE_URL}`);
     mainWindow.loadURL(BASE_URL);
     mainWindow.webContents.openDevTools();
   } else {
@@ -64,12 +64,20 @@ ELECTRON.app.on("activate", (): void => {
 
 // IPC Setup for using SQL.
 
-ELECTRON.ipcMain.on("latest-query", (event, arg) => {
-  Log.info("query from renderer : ", arg);
-  DB.GetData(arg)
-    .then((res) => event.sender.send("sql-return-latest", res))
+ELECTRON.ipcMain.on("all-tables", (event, arg) => {
+  log.info("query from renderer : ", arg);
+  log.info("Get Tables!")
+  DB.GetTables()
+    .then((res) => event.sender.send("sql-return-all-tables", res))
     .catch((error) => console.log(error));
 });
+
+// ELECTRON.ipcMain.on("latest-query", (event, arg) => {
+//   Log.info("query from renderer : ", arg);
+//   DB.GetData(arg)
+//     .then((res) => event.sender.send("sql-return-latest", res))
+//     .catch((error) => console.log(error));
+// });
 
 // Examples:
 // Asynchronous method.

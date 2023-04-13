@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ipcRenderer } from "electron";
+import * as log from "electron-log"
 
 declare global {
   interface Window {
@@ -8,28 +8,20 @@ declare global {
 }
 
 function App() {
-  interface PersonProps {
-    ID: number;
-    Name: string;
-  }
-
-  const [data, setData] = useState<PersonProps[]>([]);
-
   useEffect(() => {
-    window.myApi.send("latest-query", "select * from Person");
+    window.myApi.send("all-tables");
+    window.myApi.log("info", "Send Channel: all-tables");
   }, []);
 
-  window.myApi.receive("sql-return-latest", (data: PersonProps[]) => {
-    console.log(`Received data from main process`);
-    console.table(data);
-    setData(data);
-    window.myApi.removeListeners("sql-return-latest");
+  window.myApi.receive("sql-return-all-tables", (data: any[]) => {
+    window.myApi.log(`Received data from main process`);
+    window.myApi.log("info", data);
+    window.myApi.removeListeners("sql-return-all-tables");
   });
 
   return (
     <>
       <h1>My Electron, React and ThreeJS template</h1>
-      <ul>{data && data.map((i) => <li key={i.ID}>{i.Name}</li>)}</ul>
     </>
   );
 }
