@@ -49,6 +49,12 @@
 3. `@babel/preset-react`: Babel preset for all React plugins.
 4. `@babel/preset-typescript`: Babel preset for TypeScript.
 
+#### Electron
+1. `electron`: The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on Node.js and Chromium and is used by the Atom editor and many other apps.
+2. `electron-builder`: A complete solution to package and build a ready for distribution Electron app for MacOS, Windows and Linux with “auto update” support out of the box.
+3. `electron-store`: Simple data persistence for your Electron app or module - Save and load user preferences, app state, cache, etc.
+4. `@electron/remote`: an Electron module that bridges JavaScript objects from the main process to the renderer process. This lets you access main-process-only objects as if they were available in the renderer process.
+
 #### sqlite - FE DB.
 1. `sql.js`: Javascript SQL database. It allows you to create a relational database and query it entirely in the browser.
 

@@ -129,6 +129,6 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   // Set which to compile and not to.
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "public/*"],
+  "exclude": ["node_modules", "./src/Example Components/*"]
 }

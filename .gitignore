@@ -14,6 +14,7 @@
 
 # typescript compiled files.
 public/electron.js
+public/preload.js
 
 # misc
 .DS_Store
