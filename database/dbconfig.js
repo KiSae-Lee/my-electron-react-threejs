@@ -1,20 +1,20 @@
-const path = require("path");
-const isDev = require("electron-is-dev");
-const Store = require("electron-store");
+import { join, dirname } from 'path';
+import isDev from 'electron-is-dev';
+import Store from 'electron-store';
 
 const store = new Store();
 
 var dbFileName;
 
-if (store.has("dbFileName")) {
-  dbFileName = store.get("dbFileName")[0]; // store.get returns array.
+if (store.has('dbFileName')) {
+    dbFileName = store.get('dbFileName')[0]; // store.get returns array.
 
-  module.exports = dbFileName;
+    module.exports = dbFileName;
 } else {
-    if(isDev && process.argv.indexOf(`--noDevServer`) === -1){
-        dbFileName = path.join(path.dirname(__dirname), "extra", "testdb.db");
+    if (isDev && process.argv.indexOf(`--noDevServer`) === -1) {
+        dbFileName = join(dirname(__dirname), 'extra', 'testdb.db');
     } else {
-        dbFileName = path.join(process.resourcesPath, "extra", "testdb.db")
+        dbFileName = join(process.resourcesPath, 'extra', 'testdb.db');
     }
 
     module.exports = dbFileName;

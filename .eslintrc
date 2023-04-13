@@ -1,0 +1,41 @@
+{
+    // Global env settings.
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+
+    // Register external ESLint settings from npm install.
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+
+    // Javascript option for ESLint to support.
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+
+    // Register parser
+    "parser": "@typescript-eslint/parser",
+
+    // Additional plugin for user settings.
+    "plugins": [
+        "@typescript-eslint",
+        "prettier"
+    ],
+
+    // Additional rules.
+    "rules": {
+        "prettier/prettier": [
+            "error", {
+                "endOfLine": "auto"
+            }
+        ]
+    }
+}

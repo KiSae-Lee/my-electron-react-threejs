@@ -32,14 +32,19 @@
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.21.4",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "babel-loader": "^9.1.2",
     "concurrently": "^8.0.1",
     "css-loader": "^6.7.3",
     "electron": "^24.0.0",
     "electron-builder": "^24.2.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "file-loader": "^6.2.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "prettier": "^2.8.7",
     "style-loader": "^3.3.2",
     "url-loader": "^4.1.1",
     "wait-on": "^7.0.1",
@@ -60,7 +65,7 @@
     "directories": {
       "buildResources": "assets"
     },
-    "extraResources":[
+    "extraResources": [
       "extra/**"
     ]
   }
