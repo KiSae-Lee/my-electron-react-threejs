@@ -3,7 +3,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 declare global {
     interface Window {
-        myApi?: any;
+        ipcApi?: any;
     }
 }
 
@@ -16,22 +16,22 @@ function App() {
 
     const RunSQL = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        window.myApi.log('info', 'Input has been submitted!');
-        window.myApi.send('run-sql', runInputValue);
+        window.ipcApi.log('info', 'Input has been submitted!');
+        window.ipcApi.send('run-sql', runInputValue);
 
-        window.myApi.receive('sql-return-run-sql', (data: any[]) => {
-            window.myApi.log('info', `Received data from main process`);
-            window.myApi.log('info', data);
-            window.myApi.removeListeners('sql-return-run-sql');
+        window.ipcApi.receive('sql-return-run-sql', (data: any[]) => {
+            window.ipcApi.log('info', `Received data from main process`);
+            window.ipcApi.log('info', data);
+            window.ipcApi.removeListeners('sql-return-run-sql');
         });
     };
 
     const ShowAllTables = () => {
-        window.myApi.send('run-sql', `SELECT name FROM sqlite_master WHERE type='table'`);
-        window.myApi.receive('sql-return-run-sql', (data: any[]) => {
-            window.myApi.log('info', `Received data from main process`);
-            window.myApi.log('info', data);
-            window.myApi.removeListeners('sql-return-run-sql');
+        window.ipcApi.send('run-sql', `SELECT name FROM sqlite_master WHERE type='table'`);
+        window.ipcApi.receive('sql-return-run-sql', (data: any[]) => {
+            window.ipcApi.log('info', `Received data from main process`);
+            window.ipcApi.log('info', data);
+            window.ipcApi.removeListeners('sql-return-run-sql');
         });
     };
 

@@ -4,7 +4,7 @@ import * as log from 'electron-log';
 
 // Expose protected methods that allow the renderer process to use.
 // the ipcRenderer without exposing the entire object.
-contextBridge.exposeInMainWorld('myApi', {
+contextBridge.exposeInMainWorld('ipcApi', {
     send: (channel: string, data: any[]) => {
         // whitelist channels
         const validChannels = ['execute-sql', 'run-sql'];
