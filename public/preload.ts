@@ -1,20 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { contextBridge, ipcRenderer } from 'electron';
 import * as log from 'electron-log';
 
 // Expose protected methods that allow the renderer process to use.
 // the ipcRenderer without exposing the entire object.
 contextBridge.exposeInMainWorld('myApi', {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     send: (channel: string, data: any[]) => {
         // whitelist channels
-        const validChannels = ['all-tables'];
+        const validChannels = ['execute-sql', 'run-sql'];
         if (validChannels.includes(channel)) {
             ipcRenderer.send(channel, data);
         }
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     receive: (channel: string, func: any) => {
-        const validChannels = ['sql-return-all-tables'];
+        const validChannels = ['sql-return-execute-sql', 'sql-return-run-sql'];
         if (validChannels.includes(channel)) {
             // Deliberately strip event as it includes `sender`
             ipcRenderer.on(channel, (event, ...args) => {
@@ -23,7 +22,7 @@ contextBridge.exposeInMainWorld('myApi', {
         }
     },
     removeListeners: (channel: string) => {
-        const validChannels = ['sql-return-all-tables'];
+        const validChannels = ['sql-return-execute-sql', 'sql-return-run-sql'];
         if (validChannels.includes(channel)) {
             // Deliberately strip event as it includes `sender`
             ipcRenderer.removeAllListeners(channel);

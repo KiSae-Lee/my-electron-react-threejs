@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as path from 'path';
 import * as ELECTRON from 'electron';
 import * as RemoteMain from '@electron/remote/main';
@@ -64,38 +65,10 @@ ELECTRON.app.on('activate', (): void => {
 
 // IPC Setup for using SQL.
 
-ELECTRON.ipcMain.on('all-tables', (event, arg) => {
-    log.info('query from renderer : ', arg);
-    log.info('Get Tables!');
-    DB.GetTables()
-        .then((res) => event.sender.send('sql-return-all-tables', res))
-        .catch((error) => console.log(error));
+ELECTRON.ipcMain.on('run-sql', (event, arg) => {
+    log.info('Running SLQ...');
+    log.info('trying to run: ', arg);
+    DB.RunSQL(arg)
+        .then((res: any) => event.sender.send('sql-return-run-sql', res))
+        .catch((error: any) => console.log(error));
 });
-
-// ELECTRON.ipcMain.on("latest-query", (event, arg) => {
-//   Log.info("query from renderer : ", arg);
-//   DB.GetData(arg)
-//     .then((res) => event.sender.send("sql-return-latest", res))
-//     .catch((error) => console.log(error));
-// });
-
-// Examples:
-// Asynchronous method.
-// ipcMain.on("asynchronous-message", (event, arg) => {
-//   console.log(arg); // print "ping".
-//   event.reply("asynchronous-reply", "pong");
-// });
-
-// ipcMain.on("synchronous-message", (event, arg) => {
-//   console.log(arg); // prints "ping"
-//   event.returnValue = "pong";
-// });
-
-// Synchronous method.
-// console.log(ipcRenderer.sendSync("synchronous-message", "ping")); // prints "pong".
-
-// ipcRenderer.on("asynchronous-reply", (event, arg) => {
-//   console.log(arg); // prints "pong"
-// });
-
-// ipcRenderer.send("asynchronous-message", "ping");
