@@ -2,6 +2,8 @@
 import React, { ChangeEvent, FormEvent, useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 
+import Counter from './Redux Example/Counter';
+
 declare global {
     interface Window {
         ipcApi?: any;
@@ -9,6 +11,7 @@ declare global {
 }
 
 function App() {
+    // SQL Examples.
     const [runInputValue, setRunInputValue] = useState<string>('');
 
     const onRunInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,12 +39,14 @@ function App() {
         });
     };
 
+    // Redux Examples.
     const [showElement, setShowElement] = useState(true);
 
     const handleClick = () => {
         setShowElement(false);
     };
 
+    // Three Examples.
     function Box(props: JSX.IntrinsicElements['mesh']) {
         // This reference will give us direct access to the mesh
         const mesh = useRef<THREE.Mesh>(null);
@@ -56,9 +61,9 @@ function App() {
                 {...props}
                 ref={mesh}
                 scale={active ? 1.5 : 1}
-                onClick={(event) => setActive(!active)}
-                onPointerOver={(event) => setHover(true)}
-                onPointerOut={(event) => setHover(false)}
+                onClick={() => setActive(!active)}
+                onPointerOver={() => setHover(true)}
+                onPointerOut={() => setHover(false)}
             >
                 <boxGeometry args={[1, 1, 1]} />
                 <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
@@ -77,6 +82,9 @@ function App() {
             <div>
                 {showElement && <p>This element will be removed</p>}
                 <button onClick={handleClick}>Remove Element</button>
+            </div>
+            <div>
+                <Counter title="myCounter" />
             </div>
             <div
                 style={{

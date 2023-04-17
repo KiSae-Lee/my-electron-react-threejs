@@ -28,6 +28,10 @@
 1. `react`: react module.
 2. `react-dom`: provides DOM-specific methods that can be used at the top level of your app and as an escape hatch to get outside the React model if you need to.
 
+#### Redux
+1. `@reduxjs/toolkit`: Predictable Status Container for JavaScript Apps.
+2. `react-redux`: Official React binding for Redux.
+
 #### Typescript - Language
 1. `typescript`: typescript module.
 
