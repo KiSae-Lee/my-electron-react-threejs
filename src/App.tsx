@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 
 declare global {
     interface Window {
@@ -35,6 +36,36 @@ function App() {
         });
     };
 
+    const [showElement, setShowElement] = useState(true);
+
+    const handleClick = () => {
+        setShowElement(false);
+    };
+
+    function Box(props: JSX.IntrinsicElements['mesh']) {
+        // This reference will give us direct access to the mesh
+        const mesh = useRef<THREE.Mesh>(null);
+        // Set up state for the hovered and active state
+        const [hovered, setHover] = useState(false);
+        const [active, setActive] = useState(false);
+        // Subscribe this component to the render-loop, rotate the mesh every frame
+        useFrame((state, delta) => (mesh.current !== null ? (mesh.current.rotation.x += delta) : null));
+        // Return view, these are regular three.js elements expressed in JSX
+        return (
+            <mesh
+                {...props}
+                ref={mesh}
+                scale={active ? 1.5 : 1}
+                onClick={(event) => setActive(!active)}
+                onPointerOver={(event) => setHover(true)}
+                onPointerOut={(event) => setHover(false)}
+            >
+                <boxGeometry args={[1, 1, 1]} />
+                <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+            </mesh>
+        );
+    }
+
     return (
         <>
             <h1>My Electron, React and ThreeJS template</h1>
@@ -43,6 +74,21 @@ function App() {
                 <input type="text" value={runInputValue} onChange={onRunInputChange} />
             </form>
             <button onClick={ShowAllTables}>Show All Tables</button>
+            <div>
+                {showElement && <p>This element will be removed</p>}
+                <button onClick={handleClick}>Remove Element</button>
+            </div>
+            <div
+                style={{
+                    height: '100vh',
+                }}
+            >
+                <Canvas>
+                    <ambientLight intensity={0.5} />
+                    <pointLight position={[10, 10, 10]} />
+                    <Box />
+                </Canvas>
+            </div>
         </>
     );
 }

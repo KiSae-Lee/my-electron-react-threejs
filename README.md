@@ -56,6 +56,10 @@
 4. `@electron/remote`: an Electron module that bridges JavaScript objects from the main process to the renderer process. This lets you access main-process-only objects as if they were available in the renderer process.
 5. `electron-log`:  A Simple logging module for your Electron or NW.js application.
 
+#### Three
+1. `@react-three/fiber`: A React renderer for threejs.
+2. `@types/three`: Threejs definition for typescript.
+
 #### sqlite - FE DB.
 1. `sql.js`: Javascript SQL database. It allows you to create a relational database and query it entirely in the browser.
 
