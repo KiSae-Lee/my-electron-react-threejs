@@ -13,13 +13,21 @@ const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'w
     const [isRename, setIsRename] = useState(false);
     const [input, setInput] = useState(title);
 
-    const onClick = () => {
-        setIsActive((current) => !current);
-    };
+    let timer: NodeJS.Timeout;
 
-    const onDoubleClick = () => {
-        setIsRename((current) => !current);
-        inputRef.current?.select();
+    const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        clearTimeout(timer);
+
+        if (event.detail === 1) {
+            timer = setTimeout(() => {
+                // Single Click Here.
+                setIsActive((current) => !current);
+            }, 200);
+        } else if (event.detail === 2) {
+            // Double Click Here.
+            setIsRename((current) => !current);
+            inputRef.current?.select();
+        }
     };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +70,6 @@ const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'w
                 padding: '3px',
             }}
             onClick={onClick}
-            onDoubleClick={onDoubleClick}
         >
             <form ref={formRef} onSubmit={onSubmit}>
                 <input

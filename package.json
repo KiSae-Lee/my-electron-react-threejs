@@ -17,6 +17,9 @@
   "license": "ISC",
   "dependencies": {
     "@electron/remote": "^2.0.9",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.1",
     "@react-three/fiber": "^8.12.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@types/react": "^18.0.34",
