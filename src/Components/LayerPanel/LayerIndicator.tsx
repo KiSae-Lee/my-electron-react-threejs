@@ -2,32 +2,51 @@ import React, { useRef, useState, useEffect } from 'react';
 
 interface LayerIndicatorProps {
     title: string;
+    activated: boolean;
+    selected?: boolean;
     defaultColor?: string;
-    clickedColor?: string;
+    selectedColor?: string;
+    onLayerActivated?(value: string): void;
+    onLayerSelected?(value: string): void;
+    onNameChange?(currentName: string, value: string): boolean;
 }
 
-const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'white' }: LayerIndicatorProps) => {
+const LayerIndicator = ({
+    title,
+    activated,
+    selected,
+    selectedColor = '#4fc3f7',
+    defaultColor = 'transparent',
+    onLayerActivated,
+    onLayerSelected,
+    onNameChange,
+}: LayerIndicatorProps) => {
     const formRef = useRef<HTMLFormElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [isActive, setIsActive] = useState(false);
     const [isRename, setIsRename] = useState(false);
     const [input, setInput] = useState(title);
 
     let timer: NodeJS.Timeout;
 
-    const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const handleDivClick = (event: React.MouseEvent<HTMLDivElement>) => {
         clearTimeout(timer);
 
         if (event.detail === 1) {
             timer = setTimeout(() => {
+                if (onLayerSelected !== undefined) {
+                    onLayerSelected(title);
+                }
                 // Single Click Here.
-                setIsActive((current) => !current);
             }, 200);
         } else if (event.detail === 2) {
             // Double Click Here.
-            setIsRename((current) => !current);
-            inputRef.current?.select();
+            if (onLayerActivated !== undefined) onLayerActivated(title);
         }
+    };
+
+    const handleInputClick = () => {
+        setIsRename((current) => !current);
+        inputRef.current?.select();
     };
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +55,7 @@ const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'w
 
     const onLoseFocus = () => {
         setIsRename((current) => !current);
+        window.getSelection()?.removeAllRanges();
         if (formRef.current) {
             formRef.current.requestSubmit();
         }
@@ -49,10 +69,9 @@ const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'w
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // if there is no table name {title},
-        // Create Table {title}.
-        // Return all tables to check.
-        setIsActive(false);
+        if (onNameChange !== undefined) {
+            if (!onNameChange(title, input)) setInput(title);
+        }
         setIsRename(false);
         // Open the property panel.
         // else,
@@ -64,14 +83,24 @@ const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'w
     return (
         <div
             style={{
+                display: 'flex',
+                flexDirection: 'row',
                 textAlign: 'left',
-                backgroundColor: isActive ? clickedColor : defaultColor,
+                backgroundColor: selected ? selectedColor : defaultColor,
                 backgroundClip: 'content-box',
                 padding: '3px',
             }}
-            onClick={onClick}
+            onClick={handleDivClick}
         >
-            <form ref={formRef} onSubmit={onSubmit}>
+            <input type="checkbox" checked={activated} readOnly={true} />
+            <form
+                ref={formRef}
+                onSubmit={onSubmit}
+                onClick={handleInputClick}
+                style={{
+                    width: '100px',
+                }}
+            >
                 <input
                     ref={inputRef}
                     type="text"
@@ -81,13 +110,11 @@ const LayerIndicator = ({ title, defaultColor = 'transparent', clickedColor = 'w
                     onBlur={onLoseFocus}
                     style={{
                         padding: 0,
-                        background: 'none',
+                        background: isRename ? 'white' : 'none',
                         border: isRename ? '1px solid #bababa' : 'none',
                         borderRadius: 0,
                         outline: 'none',
-                        WebkitAppearance: 'none',
-                        MozAppearance: 'none',
-                        appearance: 'none',
+                        width: '100%',
                     }}
                 />
             </form>

@@ -60,6 +60,9 @@ function App() {
                 flexDirection: 'column',
                 height: '100vh',
                 width: '100vw',
+                WebkitUserSelect: 'none',
+                msUserSelect: 'none',
+                userSelect: 'none',
             }}
         >
             <div
