@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import SimpleDialog from './SqlDialog';
+import SimpleDialog from '../SqlDialog';
+import Property from './Property';
 
 interface StatusBarProps {
     width: string;
@@ -7,14 +8,19 @@ interface StatusBarProps {
 }
 
 const StatusBar = ({ width, height }: StatusBarProps) => {
-    const [open, setOpen] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [openProp, setOpenProp] = useState(false);
 
     const HandleClickOpen = () => {
-        setOpen(true);
+        setOpenDialog(true);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenDialog(false);
+    };
+
+    const handleShowProperty = () => {
+        setOpenProp((current) => !current);
     };
 
     return (
@@ -33,7 +39,9 @@ const StatusBar = ({ width, height }: StatusBarProps) => {
             }}
         >
             <button onClick={HandleClickOpen}>SQL Dialog</button>
-            <SimpleDialog open={open} onClose={handleClose} />
+            <button onClick={handleShowProperty}>DB ProPerties</button>
+            {openProp ? <Property /> : null}
+            <SimpleDialog open={openDialog} onClose={handleClose} />
         </div>
     );
 };

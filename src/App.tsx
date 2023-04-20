@@ -2,7 +2,8 @@
 import React from 'react';
 import Panel from './Components/Panel';
 import Viewport from './Components/Viewport';
-import StatusBar from './Components/StatusBar';
+import StatusBar from './Components/StatusBar/StatusBar';
+import { statusBarHeight, panelWidth } from './global';
 // import Counter from './Redux Example/Counter';
 
 // Color Palette:
@@ -14,16 +15,7 @@ import StatusBar from './Components/StatusBar';
 // gallery: #bababa
 // silver: #ebebeb
 
-declare global {
-    interface Window {
-        ipcApi?: any;
-    }
-}
-
 function App() {
-    const statusBarHeight = '20px';
-    const panelWidth = '200px';
-
     // // SQL Examples.
     // const [runInputValue, setRunInputValue] = useState<string>('');
 
@@ -63,6 +55,7 @@ function App() {
                 WebkitUserSelect: 'none',
                 msUserSelect: 'none',
                 userSelect: 'none',
+                zIndex: 0,
             }}
         >
             <div
@@ -72,6 +65,7 @@ function App() {
                     flexDirection: 'row',
                     height: `calc(100vh - ${statusBarHeight})`,
                     width: '100vw',
+                    zIndex: 2,
                 }}
             >
                 <Panel height={'100%'} width={'200px'} />
@@ -80,6 +74,7 @@ function App() {
                     style={{
                         height: `calc(100vh - ${statusBarHeight})`,
                         width: `calc(100vw - ${panelWidth})`,
+                        zIndex: 1,
                     }}
                 >
                     <Viewport />
