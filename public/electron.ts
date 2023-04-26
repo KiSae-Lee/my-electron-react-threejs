@@ -65,10 +65,10 @@ ELECTRON.app.on('activate', (): void => {
 
 // IPC Setup for using SQL.
 
-ELECTRON.ipcMain.on('run-sql', (event, arg) => {
-    log.info('Running SLQ...');
-    log.info('trying to run: ', arg);
-    DB.RunSQL(arg)
+ELECTRON.ipcMain.on('run-sql', async (event, arg) => {
+    log.info('ELECTRON: Running SLQ...');
+    log.info('ELECTRON: trying to run: ', arg);
+    await DB.RunSQL(arg)
         .then((res: any) => event.sender.send('sql-return-run-sql', res))
         .catch((error: any) => console.log(error));
 });

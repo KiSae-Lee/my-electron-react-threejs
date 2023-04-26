@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SimpleDialog from '../SqlDialog';
 import Property from './Property';
-
 interface StatusBarProps {
     width: string;
     height: string;

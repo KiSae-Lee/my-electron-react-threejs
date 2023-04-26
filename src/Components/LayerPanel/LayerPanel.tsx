@@ -3,6 +3,8 @@ import LayerIndicator from './LayerIndicator';
 import LayerPanelControl from './LayerPanelControl';
 import LayerPanelHeader from './LayerPanelHeader';
 import ExecuteSQL, { DataBaseProps } from '../../IPC';
+import { useDispatch } from 'react-redux';
+import { setLayerName } from '../../Action/LayerSlice';
 
 const LayerPanel = () => {
     // NOT allow to give a existing name for a layer.
@@ -15,8 +17,10 @@ const LayerPanel = () => {
 
     const [layers, setLayers] = useState<LayerProps[]>([]);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        ExecuteSQL(`select name from sqlite_master where type='table'`, (data: DataBaseProps[]) => {
+        ExecuteSQL<DataBaseProps>(`select name from sqlite_master where type='table'`).then((data) => {
             // load Layers from DB.
             const layersFromDb: LayerProps[] = data[0].values
                 .map((item) => {
@@ -78,6 +82,7 @@ const LayerPanel = () => {
                 }
             }),
         );
+        dispatch(setLayerName(name));
     };
 
     const handleDeleteClick = () => {

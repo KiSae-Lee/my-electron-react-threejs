@@ -4,42 +4,82 @@ const initSqlJs = require('sql.js');
 const dbFileName = require('./dbconfig');
 // const log = require('electron-log');
 
-const RunSQL = (query) => {
+// const RunSQL = (query) => {
+//     return new Promise((resolve, reject) => {
+//         Run(query, (res, error) => {
+//             if (error) {
+//                 reject(error);
+//             } else {
+//                 resolve(res);
+//             }
+//         });
+//     });
+// };
+
+const RunSQL = async (query) => {
     return new Promise((resolve, reject) => {
-        Run(query, (res, error) => {
-            if (error) {
-                reject(error);
-            } else {
+        initSqlJs().then(async (SQL) => {
+            SQL.dbOpen = (databaseFileName) => {
+                try {
+                    return new SQL.Database(fs.readFileSync(databaseFileName));
+                } catch (error) {
+                    console.log('Cannot open database file.', error.message);
+                    return null;
+                }
+            };
+
+            let db = SQL.dbOpen(dbFileName);
+            try {
+                console.log(`RunSQL: try to run query: ${query}`);
+                console.log(`RunSQL: BD: ${db}`);
+                const res = await Run(db, query);
+                console.log(`RunSQL: Complete! Result: ${res}`);
+                const data = db.export();
+                const buffer = new Buffer.from(data);
+                fs.writeFileSync(dbFileName, buffer);
                 resolve(res);
+            } catch (error) {
+                reject(error);
             }
         });
     });
 };
 
-const Run = (stmt, callback) => {
-    initSqlJs().then((SQL) => {
-        SQL.dbOpen = function (databaseFileName) {
-            try {
-                return new SQL.Database(fs.readFileSync(databaseFileName));
-            } catch (error) {
-                console.log("Can't open database file.", error.message);
-                return null;
-            }
-        };
-
-        let db = SQL.dbOpen(dbFileName);
-
+const Run = (db, stmt) => {
+    return new Promise((resolve, reject) => {
         try {
-            var res = db.exec(stmt);
-            const data = db.export();
-            const buffer = new Buffer.from(data);
-            fs.writeFileSync(dbFileName, buffer);
-            callback(res);
+            const res = db.exec(stmt);
+            resolve(res);
         } catch (error) {
-            callback(error);
+            reject(error);
         }
     });
 };
+
+// const Run = (stmt, callback) => {
+//     initSqlJs().then((SQL) => {
+//         SQL.dbOpen = function (databaseFileName) {
+//             try {
+//                 return new SQL.Database(fs.readFileSync(databaseFileName));
+//             } catch (error) {
+//                 console.log("Can't open database file.", error.message);
+//                 return null;
+//             }
+//         };
+
+//         let db = SQL.dbOpen(dbFileName);
+
+//         try {
+//             var res = db.exec(stmt);
+//             const data = db.export();
+//             const buffer = new Buffer.from(data);
+//             fs.writeFileSync(dbFileName, buffer);
+//             callback(res);
+//         } catch (error) {
+//             callback(error);
+//         }
+//     });
+// };
 
 // let _rowsFromSqlDataArray = function (object) {
 //     let data = [];
