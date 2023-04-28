@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../App/store';
 import ExecuteSQL, { DataBaseProps } from '../../IPC';
 
+import EditableRow from './EditableRow';
+
 const Property = () => {
     // Get Name of the Layer.
     const selectedLayer = useSelector((state: RootState) => state.selectedLayer);
@@ -41,9 +43,11 @@ const Property = () => {
             // getLayerInfo();
         }
     }, [selectedLayer]);
-    // Get Columns and Values from the Layer.
-    // Use map to create JSX codes.
-    // Check the result.
+
+    const handleAddColumnClick = () => {
+        console.log('Click!');
+    };
+
     return (
         <div
             style={{
@@ -55,37 +59,37 @@ const Property = () => {
                 zIndex: 3,
             }}
         >
-            <div>
-                <button>Add Item</button>
-            </div>
-            <div>
-                <p>{selectedLayer}</p>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                {tableHeads.map((item) => (
-                                    <TableCell key={item}>{item}</TableCell>
-                                ))}
-                                <TableCell>Actions</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rowData.map((items) => (
+            {selectedLayer === null ? null : (
+                <div>
+                    <p>{selectedLayer}</p>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
                                 <TableRow>
-                                    {items.map((item) => (
-                                        <TableCell key={item}>{item}</TableCell>
+                                    {tableHeads.map((item) => (
+                                        <TableCell key={item}>
+                                            {item}
+                                            <Button>Delete</Button>
+                                        </TableCell>
                                     ))}
                                     <TableCell>
-                                        <Button>Edit</Button>
-                                        <Button>Delete</Button>
+                                        <Button onClick={handleAddColumnClick}>Add Column</Button>
                                     </TableCell>
+                                    <TableCell>Actions</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
+                            </TableHead>
+                            <TableBody>
+                                {rowData.map((items, index) => (
+                                    <EditableRow key={index} fieldArray={items} />
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <div>
+                        <Button>Add Item</Button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
