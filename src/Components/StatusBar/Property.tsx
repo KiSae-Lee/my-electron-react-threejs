@@ -13,6 +13,7 @@ const Property = () => {
     const selectedLayer = useSelector((state: RootState) => state.selectedLayer);
     const [tableHeads, setTableHeads] = useState<string[]>([]);
     const [rowData, setRowData] = useState<string[][]>([]);
+    const [isAddingItem, setIsAddingItem] = useState(false);
 
     useEffect(() => {
         if (selectedLayer !== null) {
@@ -48,6 +49,18 @@ const Property = () => {
         console.log('Click!');
     };
 
+    const handleAddItemClick = () => {
+        setIsAddingItem((current) => !current);
+    };
+
+    const getEmptyField = () => {
+        const arr: string[] = [];
+        for (let i = 0; i < rowData[0].length; i++) {
+            arr.push('');
+        }
+        return arr;
+    };
+
     return (
         <div
             style={{
@@ -66,10 +79,10 @@ const Property = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {tableHeads.map((item) => (
+                                    {tableHeads.map((item, index) => (
                                         <TableCell key={item}>
                                             {item}
-                                            <Button>Delete</Button>
+                                            {index !== 0 ? <Button>Delete</Button> : null}
                                         </TableCell>
                                     ))}
                                     <TableCell>
@@ -82,11 +95,14 @@ const Property = () => {
                                 {rowData.map((items, index) => (
                                     <EditableRow key={index} fieldArray={items} />
                                 ))}
+                                {isAddingItem ? (
+                                    <EditableRow key="New" fieldArray={getEmptyField()} editing={true} />
+                                ) : null}
                             </TableBody>
                         </Table>
                     </TableContainer>
                     <div>
-                        <Button>Add Item</Button>
+                        <Button onClick={handleAddItemClick}>Add Item</Button>
                     </div>
                 </div>
             )}
