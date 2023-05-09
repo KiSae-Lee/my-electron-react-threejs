@@ -1,31 +1,34 @@
-import React, { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import React from 'react';
+import { Canvas } from '@react-three/fiber';
+import { GeometryRenderer } from './Gemetry/GeometryRenderer';
+import { RunScript } from './Gemetry/Script';
 
 const Viewport = () => {
+    RunScript();
     // Three Examples.
-    function Box(props: JSX.IntrinsicElements['mesh']) {
-        // This reference will give us direct access to the mesh
-        const mesh = useRef<THREE.Mesh>(null);
-        // Set up state for the hovered and active state
-        const [hovered, setHover] = useState(false);
-        const [active, setActive] = useState(false);
-        // Subscribe this component to the render-loop, rotate the mesh every frame
-        useFrame((state, delta) => (mesh.current !== null ? (mesh.current.rotation.x += delta) : null));
-        // Return view, these are regular three.js elements expressed in JSX
-        return (
-            <mesh
-                {...props}
-                ref={mesh}
-                scale={active ? 1.5 : 1}
-                onClick={() => setActive(!active)}
-                onPointerOver={() => setHover(true)}
-                onPointerOut={() => setHover(false)}
-            >
-                <boxGeometry args={[1, 1, 1]} />
-                <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-            </mesh>
-        );
-    }
+    // function Box(props: JSX.IntrinsicElements['mesh']) {
+    //     // This reference will give us direct access to the mesh
+    //     const mesh = useRef<THREE.Mesh>(null);
+    //     // Set up state for the hovered and active state
+    //     const [hovered, setHover] = useState(false);
+    //     const [active, setActive] = useState(false);
+    //     // Subscribe this component to the render-loop, rotate the mesh every frame
+    //     useFrame((state, delta) => (mesh.current !== null ? (mesh.current.rotation.x += delta) : null));
+    //     // Return view, these are regular three.js elements expressed in JSX
+    //     return (
+    //         <mesh
+    //             {...props}
+    //             ref={mesh}
+    //             scale={active ? 1.5 : 1}
+    //             onClick={() => setActive(!active)}
+    //             onPointerOver={() => setHover(true)}
+    //             onPointerOut={() => setHover(false)}
+    //         >
+    //             <boxGeometry args={[1, 1, 1]} />
+    //             <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+    //         </mesh>
+    //     );
+    // }
 
     return (
         <Canvas
@@ -35,7 +38,7 @@ const Viewport = () => {
                 backgroundColor: '#ebebeb',
             }}
         >
-            <Box />
+            <GeometryRenderer />
             <ambientLight></ambientLight>
             <spotLight></spotLight>
         </Canvas>
