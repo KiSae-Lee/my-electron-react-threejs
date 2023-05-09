@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Vec3 } from './Vector';
 
 export interface PointProps {
     x: number;
@@ -8,16 +9,31 @@ export interface PointProps {
 
 let vertices = new Float32Array([]);
 
-export const Point = ({ x, y, z }: PointProps) => {
-    // Do something...
-    const newArr = new Float32Array(vertices.length + 3);
-    newArr.set(vertices);
-    newArr[newArr.length - 3] = x;
-    newArr[newArr.length - 2] = y;
-    newArr[newArr.length - 1] = z;
+export function Point({ x, y, z }: PointProps): void;
 
-    vertices = newArr;
-};
+export function Point(vector: Vec3): void;
+
+export function Point(args: PointProps | Vec3) {
+    if ('x' in args && 'y' in args && 'z' in args) {
+        const { x, y, z } = args;
+        const newArr = new Float32Array(vertices.length + 3);
+        newArr.set(vertices);
+        newArr[newArr.length - 3] = x;
+        newArr[newArr.length - 2] = y;
+        newArr[newArr.length - 1] = z;
+
+        vertices = newArr;
+    } else {
+        const { x, y, z } = args;
+        const newArr = new Float32Array(vertices.length + 3);
+        newArr.set(vertices);
+        newArr[newArr.length - 3] = x;
+        newArr[newArr.length - 2] = y;
+        newArr[newArr.length - 1] = z;
+
+        vertices = newArr;
+    }
+}
 
 const PointRenderer = () => {
     const ref = useRef(null);
