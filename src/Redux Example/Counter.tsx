@@ -8,7 +8,7 @@ interface CounterProps {
 }
 
 const Counter = ({ title }: CounterProps) => {
-    const count = useSelector((state: RootState) => state.value);
+    const count = useSelector((state: RootState) => state.counterSlice.value);
     const dispatch = useDispatch();
 
     const handleIncrement = () => {

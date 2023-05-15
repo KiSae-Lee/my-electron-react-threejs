@@ -5,7 +5,7 @@ import * as RemoteMain from '@electron/remote/main';
 import * as isDev from 'electron-is-dev';
 import * as log from 'electron-log';
 
-import * as DB from '../database/dbMethod.js'; // Get data function form database.
+// import * as DB from '../database/dbMethod.js'; // Get data function form database.
 
 const BASE_URL = 'https://localhost:3000';
 
@@ -63,12 +63,12 @@ ELECTRON.app.on('activate', (): void => {
     }
 });
 
-// IPC Setup for using SQL.
+// // IPC Setup for using SQL.
 
-ELECTRON.ipcMain.on('run-sql', async (event, arg) => {
-    log.info('ELECTRON: Running SLQ...');
-    log.info('ELECTRON: trying to run: ', arg);
-    await DB.RunSQL(arg)
-        .then((res: any) => event.sender.send('sql-return-run-sql', res))
-        .catch((error: any) => console.log(error));
-});
+// ELECTRON.ipcMain.on('run-sql', async (event, arg) => {
+//     log.info('ELECTRON: Running SLQ...');
+//     log.info('ELECTRON: trying to run: ', arg);
+//     await DB.RunSQL(arg)
+//         .then((res: any) => event.sender.send('sql-return-run-sql', res))
+//         .catch((error: any) => console.log(error));
+// });
