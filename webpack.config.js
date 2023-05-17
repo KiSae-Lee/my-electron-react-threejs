@@ -2,68 +2,68 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
-  entry: './src/index.tsx',
-  output: {
-    path: path.join(__dirname, 'build'),
-    filename: 'bundle.js',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|js)x?$/,
-        exclude: /nodeModules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          },
-        },
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/, //폰트 파일이 로더될 수 있도록 함
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name]-[hash].[ext]',
+    mode: 'production',
+    entry: './src/index.tsx',
+    output: {
+        path: path.join(__dirname, 'build'),
+        filename: 'bundle.js',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(ts|js)x?$/,
+                exclude: /nodeModules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                    },
+                },
             },
-          },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/, //폰트 파일이 로더될 수 있도록 함
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'fonts/[name]-[hash].[ext]',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.(png|svg|jpe?g|gif|ico)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: false,
+                        name: 'images/[name]-[hash].[ext]',
+                    },
+                },
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
         ],
-      },
-      {
-        test: /\.(png|svg|jpe?g|gif|ico)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: false,
-            name: 'images/[name]-[hash].[ext]',
-          },
-        },
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-    ]
-  },
+    },
     resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json'],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({ 
-      template: path.resolve(__dirname, './public/index.html'),
-    })
-  ],
-}
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './public/index.html'),
+        }),
+    ],
+};
 
 // output: 파일이 번들되면 어디로 보낼지 설정하는 옵션
 // path: 번들 파일이 저장될 디렉토리 이름

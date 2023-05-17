@@ -18,3 +18,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = { args: { title: 'myCounter' } };
+
+export const Second: Story = { args: { title: 'Second!' } };

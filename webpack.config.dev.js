@@ -2,80 +2,82 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.tsx',
-  output: {
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].bundle.js',
-    publicPath: '/',
-    path: path.resolve(__dirname, 'build'),
-  },
-  devtool: 'inline-source-map',
-  devServer: {
-    https: true,
-    host: 'localhost',
-    compress: true,
-    hot: true,
-    port: 3000,
-    open: true,
-    client: {
-      progress: true,
+    mode: 'development',
+    entry: './src/index.tsx',
+    output: {
+        filename: '[name].[contenthash].js',
+        chunkFilename: '[name].bundle.js',
+        publicPath: '/',
+        path: path.resolve(__dirname, 'build'),
     },
-  },
-  stats: {
-    cachedModules: false,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
+    devtool: 'inline-source-map',
+    devServer: {
+        https: true,
+        host: 'localhost',
+        compress: true,
+        hot: true,
+        port: 3000,
+        open: true,
+        client: {
+            progress: true,
         },
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'fonts/[name]-[hash].[ext]',
+    },
+    stats: {
+        cachedModules: false,
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(ts|js)x?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                },
             },
-          },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'fonts/[name]-[hash].[ext]',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.(png|svg|jpe?g|gif)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: false,
+                        name: 'images/[name]-[hash].[ext]',
+                    },
+                },
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
         ],
-      },
-      {
-        test: /\.(png|svg|jpe?g|gif)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: false,
-            name: 'images/[name]-[hash].[ext]',
-          },
-        },
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+    },
+    plugins: [
+        new HtmlWebPackPlugin({
+            template: './public/index.html',
+            filename: 'index.html',
+        }),
     ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.json'],
-  },
-  plugins: [new HtmlWebPackPlugin({ 
-    template: './public/index.html',
-    filename: 'index.html'
-  })],
 };
 
 // devtool: 소스 맵이 생성되는지 여부와 생성 방법을 제어

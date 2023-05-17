@@ -28,11 +28,6 @@
 1. `react`: react module.
 2. `react-dom`: provides DOM-specific methods that can be used at the top level of your app and as an escape hatch to get outside the React model if you need to.
 
-#### Material UI - React UI kit
-1. `@mui/material`: comprehensive library of components that features our implementation of Google's Material Design system.
-2. `@emotion/react`: Simple styling in React.
-3. `@emotion/styled`: The styled API for @emotion/react.
-
 #### Redux
 1. `@reduxjs/toolkit`: Predictable Status Container for JavaScript Apps.
 2. `react-redux`: Official React binding for Redux.
