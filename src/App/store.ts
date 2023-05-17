@@ -4,6 +4,7 @@ import geometrySlice from './modules/geometrySlice';
 
 export const store = configureStore({
     reducer: { counterSlice, geometrySlice },
+    devTools: true,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
