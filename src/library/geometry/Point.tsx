@@ -1,4 +1,7 @@
 import React, { useRef } from 'react';
+import { RootState, store } from '../../app/store';
+import { useSelector } from 'react-redux';
+import { addPoint } from '../../app/modules/geometrySlice';
 
 export interface PointProps {
     x: number;
@@ -6,21 +9,26 @@ export interface PointProps {
     z: number;
 }
 
-let points = new Float32Array([]);
+// let points = new Float32Array([]);
 
 export const Point = ({ x, y, z }: PointProps) => {
-    // Do something...
+    const points = store.getState().geometrySlice.points;
+    // const dispatch = useDispatch();
+
     const newArr = new Float32Array(points.length + 3);
     newArr.set(points);
     newArr[newArr.length - 3] = x;
     newArr[newArr.length - 2] = y;
     newArr[newArr.length - 1] = z;
 
-    points = newArr;
+    // points = newArr;
+    // dispatch(addPoint(newArr));
+    store.dispatch(addPoint(newArr));
 };
 
 const PointRenderer = () => {
     const ref = useRef(null);
+    const points = useSelector((state: RootState) => state.geometrySlice.points);
 
     return (
         <points ref={ref}>

@@ -3,6 +3,8 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Renderer } from '../library/geometry/Renderer';
 import RunScript from '../app/runScript';
+import { useDispatch } from 'react-redux';
+import { clear } from '../app/modules/geometrySlice';
 
 export interface ViewportProps {
     width: string;
@@ -11,7 +13,9 @@ export interface ViewportProps {
 }
 
 const Viewport = ({ width, height, test }: ViewportProps) => {
+    const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(clear());
         RunScript();
     });
 
