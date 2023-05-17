@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import Counter from './Redux Example/Counter';
+import Counter from './components/examples/Counter';
 
 function App() {
     return (

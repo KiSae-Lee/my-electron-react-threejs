@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decrement, increment } from './counterSlice';
-import { RootState } from '../App/store';
+import { RootState } from '../../app/store';
+import { decrement, increment } from '../../app/assets/examples/counterSlice';
 
 interface CounterProps {
     title: string;
