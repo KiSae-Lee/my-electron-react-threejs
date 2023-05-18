@@ -9,11 +9,8 @@ export interface PointProps {
     z: number;
 }
 
-// let points = new Float32Array([]);
-
 export const Point = ({ x, y, z }: PointProps) => {
     const points = store.getState().geometrySlice.points;
-    // const dispatch = useDispatch();
 
     const newArr = new Float32Array(points.length + 3);
     newArr.set(points);
@@ -21,8 +18,6 @@ export const Point = ({ x, y, z }: PointProps) => {
     newArr[newArr.length - 2] = y;
     newArr[newArr.length - 1] = z;
 
-    // points = newArr;
-    // dispatch(addPoint(newArr));
     store.dispatch(addPoint(newArr));
 };
 
