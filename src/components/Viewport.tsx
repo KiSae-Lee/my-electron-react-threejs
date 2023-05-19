@@ -13,6 +13,7 @@ export interface ViewportProps {
 }
 
 const Viewport = ({ width, height, test }: ViewportProps) => {
+    console.log('Viewport re-rendered!');
     return (
         <Canvas style={{ width: width, height: height }}>
             <PerspectiveCamera makeDefault position={[10, -10, 10]} fov={75} near={0.1} far={999999} up={[0, 0, 1]} />
@@ -21,7 +22,7 @@ const Viewport = ({ width, height, test }: ViewportProps) => {
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
             <pointLight position={[-10, -10, -10]} />
             <axesHelper args={[10]} />
-            {test ? <Renderer /> : null}
+            {test && <Renderer />}
         </Canvas>
     );
 };

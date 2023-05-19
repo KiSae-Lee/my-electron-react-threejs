@@ -3,7 +3,7 @@ import { Point } from '../library/geometry/Point';
 
 const RunScript = () => {
     createPointsFromData();
-    Point({ x: 5, y: 0, z: 0 });
+    Point({ x: 10, y: 0, z: 0 });
 };
 
 export default RunScript;

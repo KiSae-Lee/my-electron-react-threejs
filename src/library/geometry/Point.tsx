@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { RootState, store } from '../../app/store';
-import { useSelector } from 'react-redux';
 import { addPoint } from '../../app/modules/geometrySlice';
+import { useSelector } from 'react-redux';
 
 export interface PointProps {
     x: number;

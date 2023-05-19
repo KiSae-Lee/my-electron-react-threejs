@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Viewport from './Viewport';
 import { useDispatch } from 'react-redux';
 import { clear } from '../app/modules/geometrySlice';
@@ -8,22 +8,35 @@ import { readPointData } from '../app/modules/csvDataSlice';
 
 const Sandbox = () => {
     const dispatch = useDispatch();
+    const [isTesting, setIsTesting] = useState(true);
 
-    const handleCsvPointData = (fields: string[][]) => {
+    const handleCsvPointData = (fields: string[][], head: string[]) => {
         dispatch(readPointData(fields));
+        console.log(head);
     };
 
     const handleAnotherCsvPointData = (fields: string[][]) => {
         dispatch(readPointData(fields));
     };
 
-    dispatch(clear());
-    RunScript();
+    const handleRunScriptButtonClick = () => {
+        dispatch(clear());
+        RunScript();
+        setIsTesting((prev) => !prev);
+    };
+
+    useEffect(() => {
+        if (!isTesting) {
+            setIsTesting((prev) => !prev);
+        }
+    }, [isTesting]);
+
+    console.log('Sandbox re-rendered!');
 
     return (
         <div>
             <div>
-                <Viewport height="800px" width="800px" test={true} />
+                <Viewport height="800px" width="800px" test={isTesting} />
             </div>
             <div style={{ height: '100px' }}>
                 <h3>Sandbox Control</h3>
@@ -42,6 +55,9 @@ const Sandbox = () => {
                         onItemRead={handleAnotherCsvPointData}
                         buttonName="Point Data Import"
                     />
+                </div>
+                <div className="run-script">
+                    <button onClick={handleRunScriptButtonClick}>Run Script</button>
                 </div>
             </div>
         </div>

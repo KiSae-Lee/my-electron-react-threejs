@@ -1,13 +1,13 @@
 // get into this directory in the terminal. Use node `.\GetData.js` command to execute and see the result.
 
-const fs = require("fs");
-const initSqlJs = require("sql.js")
+const fs = require('fs');
+const initSqlJs = require('sql.js');
 
-const dbFileName = "./testdb.db"
+const dbFileName = './testdb.db';
 
 initSqlJs().then(function (sql) {
     const db = new sql.Database(fs.readFileSync(dbFileName));
-    let stmt = "select count(*) from Person";
+    let stmt = 'select count(*) from Person';
     let res = db.exec(stmt);
     // console.log(res);
 
@@ -16,7 +16,7 @@ initSqlJs().then(function (sql) {
     //     {                                    // this is a json.
     //         columns: [ 'count(*)' ],         // property in the json.
     //         values: [ [Array] ]              // property in the json.
-    //     } 
+    //     }
     // ]
     //
     // Get first item in array,
@@ -30,11 +30,11 @@ initSqlJs().then(function (sql) {
     // [                                        // this is an array.
     //     [ 2 ]                                // this is an array. which has "2" in there.
     // ]
-    
+
     console.log(`Item count of Table Person is: ${res[0].values[0][0]}`);
 
-    stmt = "select * from Person";
+    stmt = 'select * from Person';
     res = db.exec(stmt);
-    console.log(res)                           // Show scheme.
-    console.log(res[0].values);                // Show values.
-})
+    console.log(res); // Show scheme.
+    console.log(res[0].values); // Show values.
+});
