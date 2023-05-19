@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface GeometryState {
-    points: Float32Array;
+    points: number[][];
 }
 
 const initialState: GeometryState = {
-    points: new Float32Array([]),
+    points: [],
 };
 
 export const geometrySlice = createSlice({
@@ -13,10 +13,13 @@ export const geometrySlice = createSlice({
     initialState: initialState,
     reducers: {
         clear: (state) => {
-            state.points = new Float32Array([]);
+            state.points = [];
         },
         addPoint: (state, action) => {
-            state.points = action.payload;
+            state.points = [...state.points, action.payload];
+        },
+        addPoints: (state, action) => {
+            state.points = [...state.points, ...action.payload];
         },
     },
 });
